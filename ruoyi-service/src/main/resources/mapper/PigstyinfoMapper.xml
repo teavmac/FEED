@@ -5,19 +5,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.service.mapper.PigstyinfoMapper">
     
     <resultMap type="Pigstyinfo" id="PigstyinfoResult">
-        <result property="id"    column="id"    />
+        <result property="id"    column="uid"    />
         <result property="logId"    column="log_id"    />
         <result property="dName"    column="d_name"    />
         <result property="recTime"    column="rec_time"    />
-        <result property="temV"    column="tem_v"    />
-        <result property="rhV"    column="rh_v"    />
+        <result property="temV"    column="temp_v"    />
+        <result property="rhV"    column="humi_v"    />
         <result property="lightV"    column="light_v"    />
-        <result property="agV"    column="ag_v"    />
+        <result property="agV"    column="flame_v"    />
+        <result property="Air"    column="air_v"    />
     </resultMap>
 	
 	<sql id="selectPigstyinfoVo">
-        select id, log_id, d_name, rec_time, tem_v, rh_v, light_v, ag_v from pigstyinfo
+        select uid, log_id, d_name, rec_time, temp_v, air_v, humi_v, light_v, flame_v from pigstyinfo
     </sql>
+
 	
     <select id="selectPigstyinfoList" parameterType="Pigstyinfo" resultMap="PigstyinfoResult">
         <include refid="selectPigstyinfoVo"/>
@@ -29,7 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="temV != null "> and tem_v = #{temV}</if>
              <if test="rhV != null "> and rh_v = #{rhV}</if>
              <if test="lightV != null "> and light_v = #{lightV}</if>
-             <if test="agV != null "> and ag_v = #{agV}</if>
+             <if test="agV != null "> and flame_v = #{agV}</if>
+             <if test="Air != null "> and air_v = #{agV}</if>
          </where>
     </select>
     
@@ -47,7 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="temV != null  ">tem_v,</if>
 			<if test="rhV != null  ">rh_v,</if>
 			<if test="lightV != null  ">light_v,</if>
-			<if test="agV != null  ">ag_v,</if>
+			<if test="agV != null  ">flame_v,</if>
+            <if test="Air != null  ">air_v,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="logId != null  ">#{logId},</if>
@@ -57,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="rhV != null  ">#{rhV},</if>
 			<if test="lightV != null  ">#{lightV},</if>
 			<if test="agV != null  ">#{agV},</if>
+            <if test="Air != null  ">#{Air},</if>
          </trim>
     </insert>
 	 
@@ -69,7 +74,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="temV != null  ">tem_v = #{temV},</if>
             <if test="rhV != null  ">rh_v = #{rhV},</if>
             <if test="lightV != null  ">light_v = #{lightV},</if>
-            <if test="agV != null  ">ag_v = #{agV},</if>
+            <if test="agV != null  ">flame_v = #{agV},</if>
+            <if test="Air != null  ">air_v = #{Air},</if>
         </trim>
         where id = #{id}
     </update>
@@ -85,10 +91,90 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
     
-    <select id="recentTwentyByTime" resultType="HashMap">
+    <select id="recenTwentyByTime" resultType="HashMap">
         <include refid="selectPigstyinfoVo"/>
         order by rec_time desc
         limit 0,20
     </select>
-    
+
+    <select id="recentenByTime" resultType="HashMap">
+        <include refid="selectPigstyinfoVo"/>
+        order by rec_time desc
+        limit 0,10
+    </select>
+
+    <select id="selectTem" resultType="HashMap">
+        select temp_v,rec_time
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,10
+    </select>
+
+    <select id="selectHumi" resultType="HashMap">
+        select humi_v,rec_time
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,10
+    </select>
+
+    <select id="selectAmm" resultType="HashMap">
+        select air_v,rec_time
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,10
+    </select>
+
+    <select id="selectLight" resultType="HashMap">
+        select light_v,rec_time
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,10
+    </select>
+<!--    <select id="countAll" resultType="int">
+        select count(*)
+        from pigstyinfo
+    </select>-->
+
+
+    <select id="prentem" resultType="double">
+        select temp_v
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,1
+    </select>
+
+
+    <select id="prenrh" resultType="double">
+        select humi_v
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,1
+    </select>
+
+    <select id="prenlight" resultType="double">
+        select light_v
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,1
+    </select>
+
+    <select id="prenag" resultType="double">
+        select air_v
+        from pigstyinfo
+        order by rec_time
+        desc
+        limit 0,1
+    </select>
+
+
+
+
+
 </mapper>

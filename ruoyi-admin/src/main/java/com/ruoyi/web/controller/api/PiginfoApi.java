@@ -28,9 +28,81 @@ public class PiginfoApi {
 
     @GetMapping(value = "/rc20")
     @CrossOrigin
-    @ApiOperation(value = "查询传感器中最近二十条数据")
+    @ApiOperation(value = "查询传感器中最近二十条数 据")
     public ApiRes recentTwentyByTime(){
         return ApiResService.convertList(pigstyinfoService.recentTwentyByTime());
     }
+
+    @GetMapping(value = "/rc10")
+    @CrossOrigin
+    @ApiOperation(value = "查询传感器中最近十条数据")
+    public ApiRes recentenByTime(){
+        return ApiResService.convertList(pigstyinfoService.recentenByTime());
+    }
+
+    @GetMapping(value = "/tem")
+    @CrossOrigin
+    @ApiOperation(value = "查询传感器中温度数据")
+    public ApiRes select(){
+        return ApiResService.convertList(pigstyinfoService.selectTem());
+    }
+
+    @GetMapping(value = "/humi")
+    @CrossOrigin
+    @ApiOperation(value = "查询传感器中湿度数据")
+    public ApiRes selecthumi(){
+        return ApiResService.convertList(pigstyinfoService.selectHumi());
+    }
+
+    @GetMapping(value = "/light")
+    @CrossOrigin
+    @ApiOperation(value = "查询传感器中光照数据")
+    public ApiRes selectLight(){
+        return ApiResService.convertList(pigstyinfoService.selectLight());
+    }
+
+    @GetMapping(value = "/amm")
+    @CrossOrigin
+    @ApiOperation(value = "查询传感器中氨气数据")
+    public ApiRes selectAmm(){
+        return ApiResService.convertList(pigstyinfoService.selectAmm());
+    }
+
+
+/*    @GetMapping(value = "/selectCount")
+    @CrossOrigin
+    @ApiOperation(value = "查询所有数据")
+    public ApiRes countAll(){
+        return ApiResService.convertBean(pigstyinfoService.countAll());
+    }*/
+
+    @GetMapping(value = "/prentem")
+    @CrossOrigin
+    @ApiOperation(value = "查询当前温度数据")
+    public ApiRes prentem(){
+        return ApiResService.convertBean(pigstyinfoService.prentem());
+    }
+
+    @GetMapping(value = "/prenrh")
+    @CrossOrigin
+    @ApiOperation(value = "查询当前湿度数据")
+    public ApiRes prenrh(){
+        return ApiResService.convertBean(pigstyinfoService.prenrh());
+    }
+
+    @GetMapping(value = "/prenlight")
+    @CrossOrigin
+    @ApiOperation(value = "查询当前光照数据")
+    public ApiRes prenlight(){
+        return ApiResService.convertBean(pigstyinfoService.prenlight());
+    }
+
+    @GetMapping(value = "/prenag")
+    @CrossOrigin
+    @ApiOperation(value = "查询当前氨气数据")
+    public ApiRes prenag(){
+        return ApiResService.convertBean(pigstyinfoService.prenag());
+    }
+
 
 }
